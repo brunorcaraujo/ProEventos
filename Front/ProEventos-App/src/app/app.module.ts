@@ -7,9 +7,13 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EventosComponent } from './eventos/eventos.component';
-import { PalestrantesComponent } from './palestrantes/palestrantes.component';
+import { EventosComponent } from './componentes/eventos/eventos.component';
+import { PalestrantesComponent } from './componentes/palestrantes/palestrantes.component';
 import { NavComponent } from './nav/nav.component';
+import { TituloComponent } from './shared/titulo/titulo.component';
+import { PerfilComponent } from './componentes/perfil/perfil.component';
+import { ContatosComponent } from './componentes/contatos/contatos.component';
+import { DashbordComponent } from './componentes/dashbord/dashbord.component';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -22,12 +26,15 @@ import { EventoService } from './services/evento.service';
 
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 
-
 @NgModule({
   declarations: [
     AppComponent,
+    TituloComponent,
     EventosComponent,
     PalestrantesComponent,
+    PerfilComponent,
+    ContatosComponent,
+    DashbordComponent,
     NavComponent,
     DateTimeFormatPipe
    ],
