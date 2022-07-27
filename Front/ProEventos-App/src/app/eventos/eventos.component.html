@@ -1,0 +1,70 @@
+<h2>Eventos</h2>
+<hr>
+
+<div class="row g-3">
+  <div class="col-auto">
+    <input type="text"  class="form-control mb-3" placeholder="buscar ..."
+    [(ngModel)]="filtroLista">
+  </div>
+</div>
+
+<table class="table">
+  <thead class="table-dark">
+    <tr style="text-align-last: center;">
+      <th style="text-align-last: left;">
+        <button class="btn btn-outline-light btn-sm" (click)="alterarImagem()">
+          <i class="{{!mostrarImagem ? 'fa fa-eye' : 'fa fa-eye-slash'}}"></i>
+          {{!mostrarImagem ? 'Exibir' : 'Ocultar'}}
+        </button>
+      </th>
+      <th>#</th>
+      <th>Tema</th>
+      <th>Local</th>
+      <th>Data</th>
+      <th>Qtd Pessoas</th>
+      <th>Lote</th>
+      <th>Opções</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="eventos && eventos" >
+    <tr *ngFor="let evento of eventosFiltrados" style="text-align-last: center;">
+      <td>
+        <img [collapse]="!mostrarImagem"
+             [isAnimated]="true"
+             src="/assets/{{evento.imagemURL}}"
+             style="width: 150px;" >
+      </td>
+      <td>{{evento.id}}</td>
+      <td>{{evento.tema}}</td>
+      <td>{{evento.local}}</td>
+      <td>{{evento.dataEvento | DateTimeFormatPipe}}</td>
+      <td>{{evento.qtdPessoas}}</td>
+      <td>{{evento.lotes[0].nome | uppercase}}</td>
+      <td style="text-align-last: center;">
+          <button type="button" class="btn btn-primary btn-sm m-1" >
+            <i class="fa fa-edit"></i></button>
+          <button type="button" class="btn btn-danger btn-sm m-1" (click)="openModal(template)">
+            <i class="fa fa-trash"></i></button>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!eventos || eventos.length == 0">
+    <tr >
+      <td colspan="8" class="text-center">
+        <h4>Nenhum evento cadastrado.</h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+
+
+<!-- {{eventos | json}} -->
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Tem certeza que deseja deletar?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+
+  </div>
+</ng-template>

@@ -1,29 +1,29 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProEventos.Application.Interface;
 using ProEventos.Domain.Entidades;
+using System;
+using System.Threading.Tasks;
 
 namespace ProEventos.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class EventoController : ControllerBase
+    public class PalestranteController : ControllerBase
     {
-        private readonly IEventoService _eventoService;
+        private readonly IPalestranteService _palestranteService;
 
-        public EventoController(IEventoService eventoService)
+        public PalestranteController(IPalestranteService eventoService)
         {
-            _eventoService = eventoService;
-        }            
+            _palestranteService = eventoService;
+        }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             try
             {
-                var eventos = await _eventoService.GetAllEventosAsync(true);
+                var eventos = await _palestranteService.GetAllPalestrantesAsync(true);
                 if (eventos == null) return NotFound("Nenhum evento econtrado");
 
                 return Ok(eventos);
@@ -35,11 +35,11 @@ namespace ProEventos.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Evento>> GetById(int id)
+        public async Task<ActionResult<Palestrante>> GetById(int id)
         {
             try
             {
-                var eventos = await _eventoService.GetAllEventoByIdAsync(id, true);
+                var eventos = await _palestranteService.GetAllPalestranteByIdAsync(id, true);
                 if (eventos == null) return NotFound("Nenhum evento econtrado");
 
                 return Ok(eventos);
@@ -51,11 +51,11 @@ namespace ProEventos.API.Controllers
         }
 
         [HttpGet("{tema}/tema")]
-        public async Task<ActionResult<Evento>> GetByTema(string tema)
+        public async Task<ActionResult<Palestrante>> GetByTema(string tema)
         {
             try
             {
-                var eventos = await _eventoService.GetAllEventosByTemaAsync(tema, true);
+                var eventos = await _palestranteService.GetAllPalestrantesByTemaAsync(tema, true);
                 if (eventos == null) return NotFound("Nenhum evento econtrado");
 
                 return Ok(eventos);
@@ -67,11 +67,11 @@ namespace ProEventos.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Evento model)
+        public async Task<IActionResult> Post(Palestrante model)
         {
             try
             {
-                var eventos = await _eventoService.AddEvento(model);
+                var eventos = await _palestranteService.AddPalestrante(model);
                 if (eventos == null) return BadRequest("Erro ao adicionar evento");
 
                 return Ok(eventos);
@@ -83,11 +83,11 @@ namespace ProEventos.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Evento model)
+        public async Task<IActionResult> Put(int id, Palestrante model)
         {
             try
             {
-                var eventos = await _eventoService.UpdateEvento(id, model);
+                var eventos = await _palestranteService.UpdatePalestrante(id, model);
                 if (eventos == null) return BadRequest("Erro ao atualizar evento");
 
                 return Ok(eventos);
@@ -103,7 +103,7 @@ namespace ProEventos.API.Controllers
         {
             try
             {
-                if (!await _eventoService.DeleteEvento(id)) return BadRequest("Erro ao deletar evento");
+                if (!await _palestranteService.DeletePalestrante(id)) return BadRequest("Erro ao deletar evento");
                 return Ok();
             }
             catch (Exception ex)
