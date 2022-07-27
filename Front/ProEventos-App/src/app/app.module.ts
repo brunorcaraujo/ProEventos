@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EventosComponent } from './componentes/eventos/eventos.component';
 import { PalestrantesComponent } from './componentes/palestrantes/palestrantes.component';
-import { NavComponent } from './nav/nav.component';
+import { NavComponent } from './shared/nav/nav.component';
 import { TituloComponent } from './shared/titulo/titulo.component';
 import { PerfilComponent } from './componentes/perfil/perfil.component';
 import { ContatosComponent } from './componentes/contatos/contatos.component';
@@ -40,6 +40,7 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
    ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     RouterModule,
     HttpClientModule,
@@ -54,8 +55,7 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
       preventDuplicates: true,
       progressBar: true,
     }),
-    NgxSpinnerModule.forRoot({type: 'ball-scale-multiple'}),
-    FormsModule
+    NgxSpinnerModule.forRoot({type: 'ball-scale-multiple'})
   ],
   providers: [EventoService],
   bootstrap: [AppComponent],
