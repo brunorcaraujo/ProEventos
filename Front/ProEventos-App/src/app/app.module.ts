@@ -7,13 +7,22 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EventosComponent } from './componentes/eventos/eventos.component';
-import { PalestrantesComponent } from './componentes/palestrantes/palestrantes.component';
+
+import { PerfilComponent } from './components/user/perfil/perfil.component';
+import { EventosComponent } from './components/eventos/eventos.component';
+import { ContatosComponent } from './components/contatos/contatos.component';
+import { DashbordComponent } from './components/dashbord/dashbord.component';
+import { PalestrantesComponent } from './components/palestrantes/palestrantes.component';
+import { EventoDetalheComponent } from './components/eventos/evento-detalhe/evento-detalhe.component';
+import { EventoListaComponent } from './components/eventos/evento-lista/evento-lista.component';
+
 import { NavComponent } from './shared/nav/nav.component';
 import { TituloComponent } from './shared/titulo/titulo.component';
-import { PerfilComponent } from './componentes/perfil/perfil.component';
-import { ContatosComponent } from './componentes/contatos/contatos.component';
-import { DashbordComponent } from './componentes/dashbord/dashbord.component';
+import { BotoesComponent } from './shared/botoes/botoes.component';
+import { UserComponent } from './components/user/user.component';
+import { LoginComponent } from './components/user/login/login.component';
+import { RegistroUsuarioComponent } from './components/user/registroUsuario/registroUsuario.component';
+
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -26,16 +35,24 @@ import { EventoService } from './services/evento.service';
 
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
     TituloComponent,
     EventosComponent,
+    EventoDetalheComponent,
+    EventoListaComponent,
     PalestrantesComponent,
+    UserComponent,
+    LoginComponent,
+    RegistroUsuarioComponent,
     PerfilComponent,
     ContatosComponent,
     DashbordComponent,
     NavComponent,
+    BotoesComponent,
     DateTimeFormatPipe
    ],
   imports: [
