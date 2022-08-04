@@ -17,6 +17,7 @@ export class EventoListaComponent implements OnInit {
 
   public eventos: Evento[] = [];
   public eventosFiltrados: Evento[] = [];
+  public eventoId: number = 0;
 
   public mostrarImagem = true;
 
@@ -48,9 +49,12 @@ export class EventoListaComponent implements OnInit {
       next: (_eventos : Evento[]) => {
         this.eventos = _eventos,
         this.eventosFiltrados = this.eventos
+
+        console.log(this.eventos);
       },
       error: (error : any) => {
-        this.spinner.hide(),
+        console.log(error);
+        this.spinner.hide();
         this.toastr.error('Falha ao carregar eventos!', 'Falhou...');
       },
       complete: () => this.spinner.hide()
@@ -70,13 +74,33 @@ export class EventoListaComponent implements OnInit {
     )
   }
 
-  openModal(template: TemplateRef<any>) {
+  openModal(event: any, template: TemplateRef<any>, eventoId: number) {
+
+    event.stopPropagation();
+    this.eventoId = eventoId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+
   }
 
   confirm(): void {
+
     this.modalRef?.hide();
-    this.toastr.success('Evento deletado com sucesso...', 'Deletado!');
+    this.spinner.show();
+
+    this.eventoService.deleteEvento(this.eventoId).subscribe({
+      next: (result: string) => {
+          console.log(result);
+          this.toastr.success(`Evento deletado com sucesso...`, 'Deletado!');
+          this.spinner.hide();
+          this.getEventos();
+      },
+      error: (error : any) => {
+        console.log(error);
+        this.toastr.error(`Erro ao tentar deletar o evento ${ this.eventoId }`, 'Erro');
+        this.spinner.hide();
+      },
+      complete: () => this.spinner.hide()
+    });
   }
 
   decline(): void {
