@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProEventos.Application.DTO;
 using ProEventos.Application.Interface;
 using ProEventos.Domain.Entidades;
 
@@ -24,8 +25,8 @@ namespace ProEventos.API.Controllers
             try
             {
                 var eventos = await _eventoService.GetAllEventosAsync(true);
-                if (eventos == null) return NotFound("Nenhum evento econtrado");
-
+                if (eventos == null) return NoContent();
+                
                 return Ok(eventos);
             }
             catch (Exception ex)
@@ -40,7 +41,7 @@ namespace ProEventos.API.Controllers
             try
             {
                 var eventos = await _eventoService.GetAllEventoByIdAsync(id, true);
-                if (eventos == null) return NotFound("Nenhum evento econtrado");
+                if (eventos == null) return NoContent();
 
                 return Ok(eventos);
             }
@@ -56,7 +57,7 @@ namespace ProEventos.API.Controllers
             try
             {
                 var eventos = await _eventoService.GetAllEventosByTemaAsync(tema, true);
-                if (eventos == null) return NotFound("Nenhum evento econtrado");
+                if (eventos == null) return NoContent();
 
                 return Ok(eventos);
             }
@@ -67,7 +68,7 @@ namespace ProEventos.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Evento model)
+        public async Task<IActionResult> Post(EventoDTO model)
         {
             try
             {
@@ -83,7 +84,7 @@ namespace ProEventos.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Evento model)
+        public async Task<IActionResult> Put(int id, EventoDTO model)
         {
             try
             {
@@ -104,7 +105,7 @@ namespace ProEventos.API.Controllers
             try
             {
                 if (!await _eventoService.DeleteEvento(id)) return BadRequest("Erro ao deletar evento");
-                return Ok();
+                return Ok("Registro Deletado");
             }
             catch (Exception ex)
             {
