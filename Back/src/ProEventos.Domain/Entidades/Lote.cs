@@ -12,7 +12,7 @@ namespace ProEventos.Domain.Entidades
         public int Quantidade { get; set; }
 
         //[ForeignKey("Eventos")]
-        public int EventoID { get; set; }
+        public int EventoId { get; set; }
         public Evento Evento { get; set; }
     }
 }

@@ -7,5 +7,6 @@ export interface Lote {
   dataInicio? : Date;
   dataFim? : Date;
   quantidade : number;
+  eventoId: number;
   evento : Evento;
 }
