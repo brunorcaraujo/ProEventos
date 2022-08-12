@@ -44,7 +44,7 @@
         <td class="d-none d-md-table-cell">
           <img [collapse]="!mostrarImagem"
               [isAnimated]="true"
-              src="/assets/{{evento.imagemURL}}"
+              [src]="mostraImagem(evento.imagemURL)"
               style="width: 150px;" >
         </td>
         <td>{{evento.id}}</td>

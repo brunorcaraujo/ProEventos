@@ -19,6 +19,8 @@ import { Lote } from '@app/models/Lote';
 import { LoteService } from '@app/services/lote.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
+import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-evento-detalhe',
   templateUrl: './evento-detalhe.component.html',
@@ -31,6 +33,8 @@ export class EventoDetalheComponent implements OnInit {
   eventoId: number = 0;
   modalRef?: BsModalRef;
   loteAtual = {id: 0, nome: '', indice: 0};
+  imagemURL = 'assets/image/upload-image.png';
+  file: File | any;
 
   get modoEditar(): boolean {
     return this.estadoSalvar == 'put';
@@ -120,9 +124,7 @@ export class EventoDetalheComponent implements OnInit {
   }
 
   public retornaTituloLote(nome: string) : string {
-
     return nome == null || nome == '' ? 'Nome do Lote' : nome
-
   }
 
   public limparForm(): void {
@@ -150,6 +152,11 @@ export class EventoDetalheComponent implements OnInit {
           // this.evento = Object.assign({}, evento);
           this.evento = { ...evento };
           this.form.patchValue(this.evento);
+
+          if (this.evento.imagemURL !== '') {
+            this.imagemURL = environment.apiUrl + 'resources/images/' + this.evento.imagemURL;
+          }
+
           this.evento.lotes.forEach((lote) => {
             this.lotes.push(this.criarLote(lote));
           });
@@ -293,4 +300,31 @@ export class EventoDetalheComponent implements OnInit {
   declineDeleteLote(): void {
     this.modalRef?.hide();
   }
+
+  onFileChange(ev: any): void {
+    const reader = new FileReader();
+
+    reader.onload = (event: any) => this.imagemURL = event.target.result;
+
+    this.file = ev.target.files;
+
+    reader.readAsDataURL(this.file[0]);
+
+    this.uploadImagem();
+  }
+
+  uploadImagem(): void {
+    this.spinner.show();
+    this.eventoService.postUpload(this.eventoId, this.file).subscribe(
+      () => {
+        this.carregarEvento();
+        this.toastr.success('Imagem atualizada com Sucesso', 'Sucesso!');
+      },
+      (error: any) => {
+        this.toastr.error('Erro ao fazer upload de imagem', 'Erro!');
+        console.log(error);
+      }
+    ).add(() => this.spinner.hide());
+  }
+
 }
